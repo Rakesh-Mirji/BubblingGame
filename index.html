@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Bubble Game</title>
+    <style>
+    *{
+      margin:0px;
+      padding:0px;
+    }
+      .container{
+        height:100vh;
+        width:100vw;
+        background: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .box{
+        position: relative;
+        width:  600px;
+        height: 600px;
+        background: yellow;
+        overflow:hidden;
+      }
+      .bubble{
+        position:absolute;
+        border: 2px solid black;
+        border-radius: 50%;
+        opacity:0.7;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="box">
+
+      </div>
+    </div>
+
+    <script>
+      window.onload=function(){
+        const MAX_BUBBLES=10;
+        const colors=['red','blue','green','orange','purple']
+        const Box=document.querySelector('.box');
+        const bubbles=[];
+
+        function makeBubble(){
+          //pick random radius
+          let radius = Math.floor(Math.random()*100);
+          //pick a random color
+          let color = Math.floor(Math.random()*10)%colors.length;
+          //pick x & y axis
+          let x= Math.floor(Math.random()*100)%550+Math.floor(Math.random()*500);
+          let y= Math.floor(Math.random()*100)%550+Math.floor(Math.random()*500);
+          // Create Bubble div
+          let div=document.createElement("div");
+          div.classList.add("bubble");
+          div.style.left=`${x-radius}px`;
+          div.style.top=`${y-radius}px`;
+          div.style.height=`${radius*2}px`;
+          div.style.width=`${radius*2}px`;
+          div.style.background=colors[color];
+
+
+          return{x,y,radius,color,div}
+        }
+        //init function only runs once after execution
+        function init(){
+          for(let i=0;i<MAX_BUBBLES;i++){
+            const bubble=makeBubble()
+            bubbles.push(bubble)
+            Box.appendChild(bubble.div)
+          }
+        }
+        init()
+      }
+    </script>
+  </body>
+</html>
